@@ -1,0 +1,4130 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "DEV+",
+    "description": "<a href=\"/redoc\" target=\"_blank\">redoc</a>",
+    "version": "2.0.0",
+    "x-logo": { "url": "/logo-teal.png" }
+  },
+  "paths": {
+    "/api/callback/identify": {
+      "post": {
+        "summary": "Laporan Pintu",
+        "operationId": "laporan_pintu_api_callback_identify_post",
+        "parameters": [
+          { "required": true, "schema": { "title": "Self" }, "name": "self", "in": "query" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": ["Home"],
+        "summary": "Home",
+        "description": "Home\n:param request:\n:return:",
+        "operationId": "home__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "text/html": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/test/oath2": {
+      "post": {
+        "tags": ["Test Oath2 authorization"],
+        "summary": "Test Oath2",
+        "operationId": "test_oath2_api_v1_test_oath2_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": { "$ref": "#/components/schemas/Body_test_oath2_api_v1_test_oath2_post" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/user": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "user list",
+        "description": "Get all administrators\n:return:",
+        "operationId": "user_list_api_v1_admin_user_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Username", "type": "string" },
+            "name": "username",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "User Phone", "type": "string" },
+            "name": "user_phone",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "User Status", "type": "boolean" },
+            "name": "user_status",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "array", "items": { "type": "string" } },
+            "name": "create_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["user_query"] }]
+      },
+      "put": {
+        "tags": ["User Management"],
+        "summary": "User modification",
+        "description": "Update user information\n:param post:\n:return:",
+        "operationId": "user_update_api_v1_admin_user_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUser" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["user_update"] }]
+      },
+      "post": {
+        "tags": ["User Management"],
+        "summary": "User add",
+        "description": "Create users\n:param post: CreateUser\n:return:",
+        "operationId": "user_add_api_v1_admin_user_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateUser" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["user_add"] }]
+      },
+      "delete": {
+        "tags": ["User Management"],
+        "summary": "User delete",
+        "description": "delete users\n:param req:\n:param user_id: int\n:return:",
+        "operationId": "user_del_api_v1_admin_user_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "User Id", "type": "integer" },
+            "name": "user_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["user_delete"] }]
+      }
+    },
+    "/api/v1/admin/user/set/role": {
+      "put": {
+        "tags": ["User Management"],
+        "summary": "Role Assignments",
+        "description": "Role Assignments\n:param post:\n:return:",
+        "operationId": "set_role_api_v1_admin_user_set_role_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/SetRole" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["user_role"] }]
+      }
+    },
+    "/api/v1/admin/user/info": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Get the current user information",
+        "description": "Get the current login user information\n:return:",
+        "operationId": "user_info_api_v1_admin_user_info_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CurrentUser" } }
+            }
+          }
+        },
+        "security": [{ "User": [] }]
+      },
+      "put": {
+        "tags": ["User Management"],
+        "summary": "Basic user information modification",
+        "description": "edit personal information\n:param req:\n:param post:\n:return:",
+        "operationId": "update_user_info_api_v1_admin_user_info_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserInfo" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": [] }]
+      }
+    },
+    "/api/v1/admin/user/account/login": {
+      "post": {
+        "tags": ["User Management"],
+        "summary": "user login",
+        "description": "user login\n:param req:\n:param post:\n:return: jwt token",
+        "operationId": "account_login_api_v1_admin_user_account_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AccountLogin" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserLogin" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/user/access/log": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "User access record",
+        "description": "Query current user access record\n:param req:\n:return:",
+        "operationId": "get_access_log_api_v1_admin_user_access_log_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        },
+        "security": [{ "User": [] }]
+      }
+    },
+    "/api/v1/admin/user/modify/mobile": {
+      "put": {
+        "tags": ["User Management"],
+        "summary": "User mobile phone number modification",
+        "description": "Modify the binding mobile phone number\n:param req:\n:param post:\n:return:",
+        "operationId": "update_user_info_api_v1_admin_user_modify_mobile_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/ModifyMobile" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": [] }]
+      }
+    },
+    "/api/v1/admin/user/avatar/upload": {
+      "put": {
+        "tags": ["User Management"],
+        "summary": "Avatar modification",
+        "description": "Avatar upload\n:param req:\n:param avatar:\n:return:",
+        "operationId": "avatar_upload_api_v1_admin_user_avatar_upload_put",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_avatar_upload_api_v1_admin_user_avatar_upload_put"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": [] }]
+      }
+    },
+    "/api/v1/admin/user/photo/upload": {
+      "post": {
+        "tags": ["User Management"],
+        "summary": "Photo upload",
+        "description": "Photo upload\n:param req:\n:param photo:\n:return:",
+        "operationId": "photo_upload_api_v1_admin_user_photo_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_photo_upload_api_v1_admin_user_photo_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": [] }]
+      }
+    },
+    "/api/v1/admin/user/file/upload": {
+      "post": {
+        "tags": ["User Management"],
+        "summary": "File Upload",
+        "operationId": "file_upload_api_v1_admin_user_file_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_file_upload_api_v1_admin_user_file_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/role/all": {
+      "get": {
+        "tags": ["Role management"],
+        "summary": "All characters are dedicated to pull off options",
+        "operationId": "all_roles_options_api_v1_admin_role_all_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "User Id", "type": "integer" },
+            "name": "user_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["user_role"] }]
+      }
+    },
+    "/api/v1/admin/role": {
+      "get": {
+        "tags": ["Role management"],
+        "summary": "Corner list",
+        "description": "Corner list\n:param role_status:\n:param pageSize:\n:param current:\n:param role_name:\n:param create_time:\n:return:",
+        "operationId": "get_all_role_api_v1_admin_role_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Role Name", "type": "string" },
+            "name": "role_name",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Role Status", "type": "boolean" },
+            "name": "role_status",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "array", "items": { "type": "string" } },
+            "name": "create_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/RoleList" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["role_query"] }]
+      },
+      "put": {
+        "tags": ["Role management"],
+        "summary": "Role modification",
+        "description": "Update role\n:param post:\n:return:",
+        "operationId": "update_role_api_v1_admin_role_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateRole" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["role_update"] }]
+      },
+      "post": {
+        "tags": ["Role management"],
+        "summary": "Character add",
+        "description": "Creating a Role\n:param post: CreateRole\n:return:",
+        "operationId": "create_role_api_v1_admin_role_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateRole" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["role_add"] }]
+      },
+      "delete": {
+        "tags": ["Role management"],
+        "summary": "Character delete",
+        "description": "Delete the role\n:param role_id:\n:return:",
+        "operationId": "delete_role_api_v1_admin_role_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Role Id", "type": "integer" },
+            "name": "role_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["role_delete"] }]
+      }
+    },
+    "/api/v1/admin/access": {
+      "get": {
+        "tags": ["authority management"],
+        "summary": "Permission query",
+        "description": "Get all permissions\n:return:",
+        "operationId": "get_all_access_api_v1_admin_access_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Role Id", "type": "integer" },
+            "name": "role_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["role_access"] }]
+      },
+      "put": {
+        "tags": ["authority management"],
+        "summary": "Permission settings",
+        "description": "Set role permission\n:param post:\n:return:",
+        "operationId": "set_role_access_api_v1_admin_access_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/SetAccess" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BaseResp" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": ["role_access"] }]
+      },
+      "post": {
+        "tags": ["authority management"],
+        "summary": "权限创建",
+        "description": "创建权限\n:param post: CreateAccess\n:return:",
+        "operationId": "create_access_api_v1_admin_access_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateAccess" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BaseResp" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sms/modify/send": {
+      "get": {
+        "tags": ["SMS interface"],
+        "summary": "发送验证码",
+        "description": "手机号修改",
+        "operationId": "send_msg_api_v1_sms_modify_send_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Phone Number",
+              "pattern": "^1[34567890]\\d{9}$",
+              "type": "string"
+            },
+            "name": "phone_number",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": [] }]
+      }
+    },
+    "/api/v1/sms/send": {
+      "get": {
+        "tags": ["SMS interface"],
+        "summary": "发送验证码",
+        "description": "注册、登陆",
+        "operationId": "send_msg_api_v1_sms_send_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Phone Number",
+              "pattern": "^1[34567890]\\d{9}$",
+              "type": "string"
+            },
+            "name": "phone_number",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cos/get/federation/token": {
+      "get": {
+        "tags": ["Object storage interface"],
+        "summary": "Get Federation Token",
+        "description": "获取临时访问token\n:return:",
+        "operationId": "get_federation_token_api_v1_cos_get_federation_token_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "File Type", "type": "string" },
+            "name": "file_type",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "User": [] }]
+      }
+    },
+    "/api/v1/layanan/layanan": {
+      "get": {
+        "tags": ["Layanan"],
+        "summary": "Layanan List",
+        "description": "Get All Layanans\n:return:",
+        "operationId": "layanan_list_api_v1_layanan_layanan_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nomor Tiket", "type": "string" },
+            "name": "nomor_tiket",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Jenis Layanan", "type": "string" },
+            "name": "jenis_layanan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Co Location", "type": "string" },
+            "name": "co_location",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Perangkat", "type": "string" },
+            "name": "perangkat",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Mulai Kunjungan", "type": "string", "format": "date-time" },
+            "name": "mulai_kunjungan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Akhir Kunjungan", "type": "integer" },
+            "name": "akhir_kunjungan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Pemandu", "type": "string" },
+            "name": "pemandu",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/LayananListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Layanan"],
+        "summary": "Update Layanan",
+        "description": "Update layanan information\n:return:\n:param post:",
+        "operationId": "layanan_update_api_v1_layanan_layanan_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateLayanan" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Layanan"],
+        "summary": "Layanan Add",
+        "description": "Layanan Add\n:param post: CreateLayanan\n:return:",
+        "operationId": "layanan_add_api_v1_layanan_layanan_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateLayanan" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Layanan"],
+        "summary": "Layanan Delete",
+        "description": "Layanan Delete\n:param req:\n:return:",
+        "operationId": "layanan_del_api_v1_layanan_layanan_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/layanan/layanan/upload/file/{file_name}": {
+      "get": {
+        "tags": ["Layanan"],
+        "summary": "Get File",
+        "operationId": "get_file_api_v1_layanan_layanan_upload_file__file_name__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "File Name", "type": "string" },
+            "name": "file_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/layanan/layanan/tiket": {
+      "get": {
+        "tags": ["Layanan"],
+        "summary": "Data Tiket",
+        "operationId": "tiket_api_v1_layanan_layanan_tiket_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/api/v1/layanan/layanan/pengunjung": {
+      "get": {
+        "tags": ["Layanan"],
+        "summary": "Data Tiket",
+        "operationId": "pengunjung_api_v1_layanan_layanan_pengunjung_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/api/v1/layanan/layanan/tolak": {
+      "put": {
+        "tags": ["Layanan"],
+        "summary": "Tolak Layanan",
+        "description": "Update layanan information\n:return:\n:param post:",
+        "operationId": "layanan_tolak_api_v1_layanan_layanan_tolak_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/TolakLayanan" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/aset": {
+      "get": {
+        "tags": ["Aset"],
+        "summary": "Aset List",
+        "description": "Get All Asets\n:return:",
+        "operationId": "aset_list_api_v1_aset_aset_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Merek", "type": "string" },
+            "name": "merek",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Tipe", "type": "string" },
+            "name": "tipe",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Fungsi Perangkat", "type": "string" },
+            "name": "fungsi_perangkat",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Foto Perangkat", "type": "string" },
+            "name": "foto_perangkat",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nomor Seri", "type": "string" },
+            "name": "nomor_seri",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Jenis Infra", "type": "string" },
+            "name": "jenis_infra",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Instansi Pemilik", "type": "string" },
+            "name": "instansi_pemilik",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Penanggung Jawab", "type": "integer" },
+            "name": "penanggung_jawab",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Lokasi", "type": "string" },
+            "name": "lokasi",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nama Ruangan", "type": "string" },
+            "name": "nama_ruangan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Posisi Rak", "type": "string" },
+            "name": "posisi_rak",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Psu", "type": "string" },
+            "name": "psu",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Posisi U", "type": "string" },
+            "name": "posisi_u",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Power", "type": "string" },
+            "name": "power",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Kapasitas Cpu", "type": "string" },
+            "name": "kapasitas_cpu",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Kapasitas Hdd", "type": "string" },
+            "name": "kapasitas_hdd",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Kapasitas Ram", "type": "string" },
+            "name": "kapasitas_ram",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Daya", "type": "string" },
+            "name": "daya",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Tanggal Pemasangan", "type": "string", "format": "date-time" },
+            "name": "tanggal_pemasangan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Tanggal Penarikan", "type": "string" },
+            "name": "tanggal_penarikan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Keterangan", "type": "string" },
+            "name": "keterangan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Status Aset", "type": "boolean", "default": true },
+            "name": "status_aset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "User", "type": "string" },
+            "name": "user",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AsetListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Aset"],
+        "summary": "Update Aset",
+        "description": "Update aset information\n:return:\n:param post:",
+        "operationId": "aset_update_api_v1_aset_aset_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateAset" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Aset"],
+        "summary": "Aset Add",
+        "description": "Aset Add\n:param post: CreateAset\n:return:",
+        "operationId": "aset_add_api_v1_aset_aset_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateAset" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/asetaset-tmp": {
+      "delete": {
+        "tags": ["Aset"],
+        "summary": "Aset Delete",
+        "description": "Aset Delete\n:param req:\n:return:",
+        "operationId": "aset_del_tmp_api_v1_aset_asetaset_tmp_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "User", "type": "string" },
+            "name": "user",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/aset/upload/photo/{file_name}": {
+      "get": {
+        "tags": ["Aset"],
+        "summary": "Get Photo",
+        "operationId": "get_photo_api_v1_aset_aset_upload_photo__file_name__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "File Name", "type": "string" },
+            "name": "file_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/aset/dataPerangkat": {
+      "get": {
+        "tags": ["Aset"],
+        "summary": "Data Perangkat",
+        "operationId": "dataPerangkat_api_v1_aset_aset_dataPerangkat_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "User", "type": "string" },
+            "name": "user",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/aset/update-status": {
+      "put": {
+        "tags": ["Aset"],
+        "summary": "Update Aset Status",
+        "operationId": "update_status_aset_api_v1_aset_aset_update_status_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateStatusAset" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/aset/status-false": {
+      "get": {
+        "tags": ["Aset"],
+        "summary": "Aset List with Status False",
+        "description": "Get All Asets with status_aset=False\n:return:",
+        "operationId": "aset_list_with_status_false_api_v1_aset_aset_status_false_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/aset/status-tmp": {
+      "get": {
+        "tags": ["Aset"],
+        "summary": "Aset List with Status False",
+        "description": "Get All Asets with status_aset=False\n:return:",
+        "operationId": "aset_list_with_status_tmp_api_v1_aset_aset_status_tmp_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Status Aset", "type": "integer" },
+            "name": "status_aset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "User", "type": "string" },
+            "name": "user",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/aset/asetbook-status": {
+      "put": {
+        "tags": ["Aset"],
+        "summary": "status-book",
+        "description": "PengunjungHadir Add\n:param post: CreatePengunjungHadir\n:return:",
+        "operationId": "book_status_put_api_v1_aset_asetbook_status_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/InsertAkanPakaiAset" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/daftar_pengunjung/daftar_pengunjung": {
+      "get": {
+        "tags": ["Daftar Pengunjung"],
+        "summary": "DaftarPengunjung List",
+        "description": "Get All DaftarPengunjungs\n:return:",
+        "operationId": "daftar_pengunjung_list_api_v1_daftar_pengunjung_daftar_pengunjung_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nama", "type": "string" },
+            "name": "nama",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nik", "type": "string" },
+            "name": "nik",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Status", "type": "string" },
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Instansi", "type": "string" },
+            "name": "instansi",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Foto", "type": "string" },
+            "name": "foto",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DaftarPengunjungListData" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Daftar Pengunjung"],
+        "summary": "Update DaftarPengunjung",
+        "description": "Update daftar_pengunjung information\n:param post:\n:return:",
+        "operationId": "daftar_pengunjung_update_api_v1_daftar_pengunjung_daftar_pengunjung_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateDaftarPengunjung" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Daftar Pengunjung"],
+        "summary": "DaftarPengunjung Add",
+        "description": "DaftarPengunjung Add\n:param post: CreateDaftarPengunjung\n:return:",
+        "operationId": "daftar_pengunjung_add_api_v1_daftar_pengunjung_daftar_pengunjung_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateDaftarPengunjung" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Daftar Pengunjung"],
+        "summary": "DaftarPengunjung Delete",
+        "description": "DaftarPengunjung Delete\n:param req:\n:return:",
+        "operationId": "daftar_pengunjung_del_api_v1_daftar_pengunjung_daftar_pengunjung_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/daftar_pengunjung/daftar_pengunjung/upload/photo/{file_name}": {
+      "get": {
+        "tags": ["Daftar Pengunjung"],
+        "summary": "Get Photo",
+        "operationId": "get_photo_api_v1_daftar_pengunjung_daftar_pengunjung_upload_photo__file_name__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "File Name", "type": "string" },
+            "name": "file_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/daftar_pengunjung/daftar_pengunjung/pengunjung": {
+      "get": {
+        "tags": ["Daftar Pengunjung"],
+        "summary": "Data Pengunjung",
+        "operationId": "pengunjung_api_v1_daftar_pengunjung_daftar_pengunjung_pengunjung_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/api/v1/buku_tamu/buku_tamu": {
+      "get": {
+        "tags": ["Buku Tamu"],
+        "summary": "BukuTamu List",
+        "description": "Get All BukuTamus\n:return:",
+        "operationId": "buku_tamu_list_api_v1_buku_tamu_buku_tamu_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "No Tiket", "type": "string" },
+            "name": "no_tiket",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Jam Masuk", "type": "string" },
+            "name": "jam_masuk",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Jam Keluar", "type": "string" },
+            "name": "jam_keluar",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Laporan Pekerjaan", "type": "string" },
+            "name": "laporan_pekerjaan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Daftar Pengunjung", "type": "string" },
+            "name": "daftar_pengunjung",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BukuTamuListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Buku Tamu"],
+        "summary": "Update BukuTamu",
+        "description": "Update buku_tamu information\n:param post:\n:return:",
+        "operationId": "buku_tamu_update_api_v1_buku_tamu_buku_tamu_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateBukuTamu" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Buku Tamu"],
+        "summary": "BukuTamu Add",
+        "description": "BukuTamu Add\n:param post: CreateBukuTamu\n:return:",
+        "operationId": "buku_tamu_add_api_v1_buku_tamu_buku_tamu_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateBukuTamu" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Buku Tamu"],
+        "summary": "BukuTamu Delete",
+        "description": "BukuTamu Delete\n:param req:\n:return:",
+        "operationId": "buku_tamu_del_api_v1_buku_tamu_buku_tamu_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/merek_tipe/merek_tipe": {
+      "get": {
+        "tags": ["MerekTipe"],
+        "summary": "MerekTipe List",
+        "description": "Get All MerekTipes\n:return:",
+        "operationId": "merek_tipe_list_api_v1_merek_tipe_merek_tipe_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Merek", "type": "string" },
+            "name": "merek",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Tipe", "type": "string" },
+            "name": "tipe",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/MerekTipeListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["MerekTipe"],
+        "summary": "Update MerekTipe",
+        "description": "Update merek_tipe information\n:param post:\n:return:",
+        "operationId": "merek_tipe_update_api_v1_merek_tipe_merek_tipe_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateMerekTipe" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["MerekTipe"],
+        "summary": "MerekTipe Add",
+        "description": "MerekTipe Add\n:param post: CreateMerekTipe\n:return:",
+        "operationId": "merek_tipe_add_api_v1_merek_tipe_merek_tipe_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateMerekTipe" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["MerekTipe"],
+        "summary": "MerekTipe Delete",
+        "description": "MerekTipe Delete\n:param req:\n:return:",
+        "operationId": "merek_tipe_del_api_v1_merek_tipe_merek_tipe_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/merek_tipe/merek_tipe/merek": {
+      "get": {
+        "tags": ["MerekTipe"],
+        "summary": "Get data merek",
+        "operationId": "dataMerek_api_v1_merek_tipe_merek_tipe_merek_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/api/v1/merek_tipe/merek_tipe/tipe": {
+      "get": {
+        "tags": ["MerekTipe"],
+        "summary": "Get data tipe",
+        "operationId": "tipe_api_v1_merek_tipe_merek_tipe_tipe_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Merek", "type": "string" },
+            "name": "merek",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pemandu/pemandu": {
+      "get": {
+        "tags": ["Pemandu"],
+        "summary": "Pemandu List",
+        "description": "Get All Pemandus\n:return:",
+        "operationId": "pemandu_list_api_v1_pemandu_pemandu_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nama", "type": "string" },
+            "name": "nama",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "No Hp", "type": "string" },
+            "name": "no_hp",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PemanduListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Pemandu"],
+        "summary": "Update Pemandu",
+        "description": "Update pemandu information\n:return:\n:param post:",
+        "operationId": "pemandu_update_api_v1_pemandu_pemandu_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdatePemandu" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Pemandu"],
+        "summary": "Pemandu Add",
+        "description": "Pemandu Add\n:param post: CreatePemandu\n:return:",
+        "operationId": "pemandu_add_api_v1_pemandu_pemandu_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreatePemandu" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Pemandu"],
+        "summary": "Pemandu Delete",
+        "description": "Pemandu Delete\n:param req:\n:return:",
+        "operationId": "pemandu_del_api_v1_pemandu_pemandu_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pemandu/pemandu/dataPemandu": {
+      "get": {
+        "tags": ["Pemandu"],
+        "summary": "Data Pemandu",
+        "operationId": "dataPemandu_api_v1_pemandu_pemandu_dataPemandu_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/api/v1/lokasi/lokasi": {
+      "get": {
+        "tags": ["Lokasi"],
+        "summary": "Lokasi List",
+        "description": "Get All Lokasis\n:return:",
+        "operationId": "lokasi_list_api_v1_lokasi_lokasi_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Merek", "type": "string" },
+            "name": "merek",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Tipe", "type": "string" },
+            "name": "tipe",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/LokasiListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Lokasi"],
+        "summary": "Update Lokasi",
+        "description": "Update lokasi information\n:param post:\n:return:",
+        "operationId": "lokasi_update_api_v1_lokasi_lokasi_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateLokasi" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Lokasi"],
+        "summary": "Lokasi Add",
+        "description": "Lokasi Add\n:param post: CreateLokasi\n:return:",
+        "operationId": "lokasi_add_api_v1_lokasi_lokasi_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateLokasi" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Lokasi"],
+        "summary": "Lokasi Delete",
+        "description": "Lokasi Delete\n:param req:\n:return:",
+        "operationId": "lokasi_del_api_v1_lokasi_lokasi_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lokasi/lokasi/lokasi": {
+      "get": {
+        "tags": ["Lokasi"],
+        "summary": "Get data lokasi",
+        "operationId": "dataLokasi_api_v1_lokasi_lokasi_lokasi_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/api/v1/lokasi/lokasi/nama_ruangan": {
+      "get": {
+        "tags": ["Lokasi"],
+        "summary": "Get data nama_ruangan",
+        "operationId": "nama_ruangan_api_v1_lokasi_lokasi_nama_ruangan_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Lokasi", "type": "string" },
+            "name": "lokasi",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lokasi/lokasi/rak": {
+      "get": {
+        "tags": ["Lokasi"],
+        "summary": "Get data rak",
+        "operationId": "rak_api_v1_lokasi_lokasi_rak_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Lokasi", "type": "string" },
+            "name": "lokasi",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": { "title": "Nama Ruangan", "type": "string" },
+            "name": "nama_ruangan",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lokasi/lokasi/posisi_u": {
+      "get": {
+        "tags": ["Lokasi"],
+        "summary": "Get data rak",
+        "operationId": "posisi_u_data_api_v1_lokasi_lokasi_posisi_u_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Lokasi", "type": "string" },
+            "name": "lokasi",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": { "title": "Nama Ruangan", "type": "string" },
+            "name": "nama_ruangan",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": { "title": "Posisi Rak", "type": "string" },
+            "name": "posisi_rak",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/power/power": {
+      "get": {
+        "tags": ["Power"],
+        "summary": "Power List",
+        "description": "Get All Pemandus\n:return:",
+        "operationId": "power_list_api_v1_power_power_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Lokasi", "type": "string" },
+            "name": "lokasi",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nama Ruangan", "type": "string" },
+            "name": "nama_ruangan",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Sn Aset", "type": "string" },
+            "name": "sn_aset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Posisi Rak", "type": "string" },
+            "name": "posisi_rak",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PowerListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Power"],
+        "summary": "Power Put",
+        "description": "Pemandu Add\n:param post: CreatePemandu\n:return:",
+        "operationId": "power_put_api_v1_power_power_put",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/PutPower" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Power"],
+        "summary": "Power Add",
+        "description": "Pemandu Add\n:param post: CreatePemandu\n:return:",
+        "operationId": "power_add_api_v1_power_power_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/InsertPower" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Power"],
+        "summary": "Pemandu Delete",
+        "description": "Pemandu Delete\n:param req:\n:return:",
+        "operationId": "power_del_api_v1_power_power_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/power/power/power_a": {
+      "get": {
+        "tags": ["Power"],
+        "summary": "Get data power A",
+        "operationId": "power_a_data_api_v1_power_power_power_a_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Lokasi", "type": "string" },
+            "name": "lokasi",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": { "title": "Nama Ruangan", "type": "string" },
+            "name": "nama_ruangan",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": { "title": "Posisi Rak", "type": "string" },
+            "name": "posisi_rak",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/power/power/power_b": {
+      "get": {
+        "tags": ["Power"],
+        "summary": "Get data power B",
+        "operationId": "power_a_data_api_v1_power_power_power_b_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Lokasi", "type": "string" },
+            "name": "lokasi",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": { "title": "Nama Ruangan", "type": "string" },
+            "name": "nama_ruangan",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": { "title": "Posisi Rak", "type": "string" },
+            "name": "posisi_rak",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pengunjung_hadir/pengunjung_hadir": {
+      "post": {
+        "tags": ["pengunjung_hadir"],
+        "summary": "PengunjungHadir Add",
+        "description": "PengunjungHadir Add\n:param post: CreatePengunjungHadir\n:return:",
+        "operationId": "pengunjung_hadir_add_api_v1_pengunjung_hadir_pengunjung_hadir_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/InsertAkanHadir" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["pengunjung_hadir"],
+        "summary": "PengunjungHadir Delete",
+        "description": "PengunjungHadir Delete\n:param req:\n:return:",
+        "operationId": "pengunjung_hadir_del_api_v1_pengunjung_hadir_pengunjung_hadir_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pengunjung_hadir/pengunjung_hadir/layanan_pengunjung": {
+      "get": {
+        "tags": ["pengunjung_hadir"],
+        "summary": "Data Pengunjung",
+        "description": "Get All Employees\n:return:",
+        "operationId": "layanan_perangkat_api_v1_pengunjung_hadir_pengunjung_hadir_layanan_pengunjung_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nik", "type": "string" },
+            "name": "nik",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nomor Tiket", "type": "string" },
+            "name": "nomor_tiket",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pakai_Aset/pakai_Aset": {
+      "post": {
+        "tags": ["pakai_aset"],
+        "summary": "PakaiAset Add",
+        "description": "PengunjungHadir Add\n:param post: CreatePengunjungHadir\n:return:",
+        "operationId": "pakai_aset_add_api_v1_pakai_Aset_pakai_Aset_post",
+        "requestBody": {
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/InsertAkanPakaiAset" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pakai_Aset/pakai_Aset/layanan_perangkat": {
+      "get": {
+        "tags": ["pakai_aset"],
+        "summary": "Data Perangkat",
+        "description": "Get All Employees\n:return:",
+        "operationId": "layanan_perangkat_api_v1_pakai_Aset_pakai_Aset_layanan_perangkat_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Pagesize", "type": "integer", "default": 10 },
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Current", "type": "integer", "default": 1 },
+            "name": "current",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Id", "type": "integer" },
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nomor Seri", "type": "string" },
+            "name": "nomor_seri",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Nomor Tiket", "type": "string" },
+            "name": "nomor_tiket",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pakai_Aset/rack": {
+      "get": {
+        "tags": ["rack"],
+        "summary": "Rack List",
+        "description": "Get All Racks\n:return:",
+        "operationId": "rack_list_api_v1_pakai_Aset_rack_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": { "title": "Name", "type": "string" },
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Posx", "type": "integer" },
+            "name": "posx",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Posy", "type": "integer" },
+            "name": "posy",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Posz", "type": "integer" },
+            "name": "posz",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Width", "type": "integer" },
+            "name": "width",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Height", "type": "integer" },
+            "name": "height",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Depth", "type": "integer" },
+            "name": "depth",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Create Time", "type": "string" },
+            "name": "create_time",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": { "title": "Update Time", "type": "string" },
+            "name": "update_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/RackListData" } }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccessToken": {
+        "title": "AccessToken",
+        "type": "object",
+        "properties": {
+          "token": { "title": "Token", "type": "string" },
+          "expires_in": { "title": "Expires In", "type": "integer" }
+        }
+      },
+      "AccountLogin": {
+        "title": "AccountLogin",
+        "type": "object",
+        "properties": {
+          "username": {
+            "title": "Username",
+            "maxLength": 10,
+            "minLength": 3,
+            "type": "string",
+            "description": "username"
+          },
+          "password": {
+            "title": "Password",
+            "maxLength": 12,
+            "minLength": 6,
+            "type": "string",
+            "description": "password"
+          },
+          "mobile": { "title": "Mobile", "type": "string", "description": "phone number" },
+          "captcha": {
+            "title": "Captcha",
+            "maxLength": 6,
+            "minLength": 6,
+            "type": "string",
+            "description": "6-digit verification code"
+          }
+        }
+      },
+      "AsetItem": {
+        "title": "AsetItem",
+        "required": [
+          "merek",
+          "tipe",
+          "fungsi_perangkat",
+          "foto_perangkat",
+          "nomor_seri",
+          "jenis_infra",
+          "instansi_pemilik",
+          "penanggung_jawab",
+          "lokasi",
+          "nama_ruangan",
+          "posisi_rak",
+          "psu",
+          "posisi_u",
+          "power",
+          "kapasitas_cpu",
+          "kapasitas_hdd",
+          "kapasitas_ram",
+          "daya",
+          "status_aset",
+          "user",
+          "id",
+          "key",
+          "create_time",
+          "update_time"
+        ],
+        "type": "object",
+        "properties": {
+          "merek": { "title": "Merek", "maxLength": 255, "type": "string" },
+          "tipe": { "title": "Tipe", "maxLength": 255, "type": "string" },
+          "fungsi_perangkat": { "title": "Fungsi Perangkat", "maxLength": 25, "type": "string" },
+          "foto_perangkat": { "title": "Foto Perangkat", "maxLength": 255, "type": "string" },
+          "nomor_seri": { "title": "Nomor Seri", "maxLength": 255, "type": "string" },
+          "jenis_infra": { "title": "Jenis Infra", "maxLength": 255, "type": "string" },
+          "instansi_pemilik": { "title": "Instansi Pemilik", "maxLength": 255, "type": "string" },
+          "penanggung_jawab": { "title": "Penanggung Jawab", "maxLength": 255, "type": "string" },
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "psu": { "title": "Psu", "maxLength": 255, "type": "string" },
+          "posisi_u": { "title": "Posisi U", "maxLength": 255, "type": "string" },
+          "power": { "title": "Power", "maxLength": 255, "type": "string" },
+          "kapasitas_cpu": { "title": "Kapasitas Cpu", "maxLength": 255, "type": "string" },
+          "kapasitas_hdd": { "title": "Kapasitas Hdd", "maxLength": 255, "type": "string" },
+          "kapasitas_ram": { "title": "Kapasitas Ram", "maxLength": 255, "type": "string" },
+          "daya": { "title": "Daya", "maxLength": 255, "type": "string" },
+          "tanggal_pemasangan": {
+            "title": "Tanggal Pemasangan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "tanggal_penarikan": {
+            "title": "Tanggal Penarikan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "keterangan": { "title": "Keterangan", "maxLength": 255, "type": "string" },
+          "status_aset": { "title": "Status Aset", "type": "integer" },
+          "user": { "title": "User", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "AsetListData": {
+        "title": "AsetListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AsetItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "BaseResp": {
+        "title": "BaseResp",
+        "required": ["code", "message", "data"],
+        "type": "object",
+        "properties": {
+          "code": { "title": "Code", "type": "integer", "description": "status code" },
+          "message": { "title": "Message", "type": "string", "description": "message" },
+          "data": { "title": "Data", "type": "array", "items": {}, "description": "data" }
+        }
+      },
+      "Body_avatar_upload_api_v1_admin_user_avatar_upload_put": {
+        "title": "Body_avatar_upload_api_v1_admin_user_avatar_upload_put",
+        "required": ["avatar"],
+        "type": "object",
+        "properties": { "avatar": { "title": "Avatar", "type": "string", "format": "binary" } }
+      },
+      "Body_file_upload_api_v1_admin_user_file_upload_post": {
+        "title": "Body_file_upload_api_v1_admin_user_file_upload_post",
+        "required": ["file"],
+        "type": "object",
+        "properties": { "file": { "title": "File", "type": "string", "format": "binary" } }
+      },
+      "Body_photo_upload_api_v1_admin_user_photo_upload_post": {
+        "title": "Body_photo_upload_api_v1_admin_user_photo_upload_post",
+        "required": ["file"],
+        "type": "object",
+        "properties": { "file": { "title": "File", "type": "string", "format": "binary" } }
+      },
+      "Body_test_oath2_api_v1_test_oath2_post": {
+        "title": "Body_test_oath2_api_v1_test_oath2_post",
+        "required": ["username", "password"],
+        "type": "object",
+        "properties": {
+          "grant_type": { "title": "Grant Type", "pattern": "password", "type": "string" },
+          "username": { "title": "Username", "type": "string" },
+          "password": { "title": "Password", "type": "string" },
+          "scope": { "title": "Scope", "type": "string", "default": "" },
+          "client_id": { "title": "Client Id", "type": "string" },
+          "client_secret": { "title": "Client Secret", "type": "string" }
+        }
+      },
+      "BukuTamuItem": {
+        "title": "BukuTamuItem",
+        "required": [
+          "no_tiket",
+          "jam_masuk",
+          "jam_keluar",
+          "laporan_pekerjaan",
+          "daftar_pengunjung",
+          "id",
+          "key",
+          "create_time",
+          "update_time"
+        ],
+        "type": "object",
+        "properties": {
+          "no_tiket": { "title": "No Tiket", "maxLength": 255, "type": "string" },
+          "jam_masuk": { "title": "Jam Masuk", "type": "string", "format": "date-time" },
+          "jam_keluar": { "title": "Jam Keluar", "type": "string", "format": "date-time" },
+          "laporan_pekerjaan": { "title": "Laporan Pekerjaan", "maxLength": 255, "type": "string" },
+          "daftar_pengunjung": { "title": "Daftar Pengunjung", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "BukuTamuListData": {
+        "title": "BukuTamuListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/BukuTamuItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "CreateAccess": {
+        "title": "CreateAccess",
+        "type": "object",
+        "properties": {
+          "access_name": {
+            "title": "Access Name",
+            "type": "string",
+            "description": "Permission name",
+            "default": "test"
+          },
+          "scopes": {
+            "title": "Scopes",
+            "type": "string",
+            "description": "Permissions",
+            "default": "test"
+          },
+          "parent_id": { "title": "Parent Id", "type": "integer", "default": 0 },
+          "is_check": { "title": "Is Check", "type": "boolean", "default": false },
+          "is_menu": { "title": "Is Menu", "type": "boolean", "default": false }
+        }
+      },
+      "CreateAset": {
+        "title": "CreateAset",
+        "required": [
+          "merek",
+          "tipe",
+          "fungsi_perangkat",
+          "foto_perangkat",
+          "nomor_seri",
+          "jenis_infra",
+          "instansi_pemilik",
+          "penanggung_jawab",
+          "lokasi",
+          "nama_ruangan",
+          "posisi_rak",
+          "psu",
+          "posisi_u",
+          "power",
+          "kapasitas_cpu",
+          "kapasitas_hdd",
+          "kapasitas_ram",
+          "daya",
+          "status_aset",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "merek": { "title": "Merek", "maxLength": 255, "type": "string" },
+          "tipe": { "title": "Tipe", "maxLength": 255, "type": "string" },
+          "fungsi_perangkat": { "title": "Fungsi Perangkat", "maxLength": 25, "type": "string" },
+          "foto_perangkat": { "title": "Foto Perangkat", "maxLength": 255, "type": "string" },
+          "nomor_seri": { "title": "Nomor Seri", "maxLength": 255, "type": "string" },
+          "jenis_infra": { "title": "Jenis Infra", "maxLength": 255, "type": "string" },
+          "instansi_pemilik": { "title": "Instansi Pemilik", "maxLength": 255, "type": "string" },
+          "penanggung_jawab": { "title": "Penanggung Jawab", "maxLength": 255, "type": "string" },
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "psu": { "title": "Psu", "maxLength": 255, "type": "string" },
+          "posisi_u": { "title": "Posisi U", "maxLength": 255, "type": "string" },
+          "power": { "title": "Power", "maxLength": 255, "type": "string" },
+          "kapasitas_cpu": { "title": "Kapasitas Cpu", "maxLength": 255, "type": "string" },
+          "kapasitas_hdd": { "title": "Kapasitas Hdd", "maxLength": 255, "type": "string" },
+          "kapasitas_ram": { "title": "Kapasitas Ram", "maxLength": 255, "type": "string" },
+          "daya": { "title": "Daya", "maxLength": 255, "type": "string" },
+          "tanggal_pemasangan": {
+            "title": "Tanggal Pemasangan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "tanggal_penarikan": {
+            "title": "Tanggal Penarikan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "keterangan": { "title": "Keterangan", "maxLength": 255, "type": "string" },
+          "status_aset": { "title": "Status Aset", "type": "integer" },
+          "user": { "title": "User", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreateBukuTamu": {
+        "title": "CreateBukuTamu",
+        "required": [
+          "no_tiket",
+          "jam_masuk",
+          "jam_keluar",
+          "laporan_pekerjaan",
+          "daftar_pengunjung"
+        ],
+        "type": "object",
+        "properties": {
+          "no_tiket": { "title": "No Tiket", "maxLength": 255, "type": "string" },
+          "jam_masuk": { "title": "Jam Masuk", "type": "string", "format": "date-time" },
+          "jam_keluar": { "title": "Jam Keluar", "type": "string", "format": "date-time" },
+          "laporan_pekerjaan": { "title": "Laporan Pekerjaan", "maxLength": 255, "type": "string" },
+          "daftar_pengunjung": { "title": "Daftar Pengunjung", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreateDaftarPengunjung": {
+        "title": "CreateDaftarPengunjung",
+        "required": ["nik", "nama", "status", "instansi", "foto"],
+        "type": "object",
+        "properties": {
+          "nik": { "title": "Nik", "maxLength": 255, "type": "string" },
+          "nama": { "title": "Nama", "maxLength": 255, "type": "string" },
+          "status": { "title": "Status", "maxLength": 255, "type": "string" },
+          "instansi": { "title": "Instansi", "maxLength": 255, "type": "string" },
+          "foto": { "title": "Foto", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreateLayanan": {
+        "title": "CreateLayanan",
+        "required": [
+          "nomor_tiket",
+          "jenis_layanan",
+          "co_location",
+          "perangkat",
+          "mulai_kunjungan",
+          "akhir_kunjungan"
+        ],
+        "type": "object",
+        "properties": {
+          "nomor_tiket": { "title": "Nomor Tiket", "maxLength": 255, "type": "string" },
+          "jenis_layanan": { "title": "Jenis Layanan", "maxLength": 255, "type": "string" },
+          "co_location": { "title": "Co Location", "maxLength": 255, "type": "string" },
+          "perangkat": { "title": "Perangkat", "maxLength": 255, "type": "string" },
+          "mulai_kunjungan": {
+            "title": "Mulai Kunjungan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "akhir_kunjungan": {
+            "title": "Akhir Kunjungan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "pemandu": { "title": "Pemandu", "maxLength": 255, "type": "string" },
+          "status": { "title": "Status", "type": "integer" },
+          "detail_tolak": { "title": "Detail Tolak", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreateLokasi": {
+        "title": "CreateLokasi",
+        "required": ["lokasi"],
+        "type": "object",
+        "properties": {
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "posisi_u": { "title": "Posisi U", "maxLength": 255, "type": "string" },
+          "sn_aset": { "title": "Sn Aset", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreateMerekTipe": {
+        "title": "CreateMerekTipe",
+        "required": ["merek"],
+        "type": "object",
+        "properties": {
+          "merek": { "title": "Merek", "maxLength": 255, "type": "string" },
+          "tipe": { "title": "Tipe", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreatePemandu": {
+        "title": "CreatePemandu",
+        "required": ["nama"],
+        "type": "object",
+        "properties": {
+          "nama": { "title": "Nama", "maxLength": 255, "minLength": 1, "type": "string" },
+          "no_hp": { "title": "No Hp", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreateRole": {
+        "title": "CreateRole",
+        "required": ["role_name"],
+        "type": "object",
+        "properties": {
+          "role_name": { "title": "Role Name", "maxLength": 25, "minLength": 3, "type": "string" },
+          "role_status": { "title": "Role Status", "type": "boolean", "default": false },
+          "role_desc": { "title": "Role Desc", "maxLength": 255, "type": "string" }
+        }
+      },
+      "CreateUser": {
+        "title": "CreateUser",
+        "required": ["username", "password"],
+        "type": "object",
+        "properties": {
+          "username": { "title": "Username", "maxLength": 25, "minLength": 3, "type": "string" },
+          "password": { "title": "Password", "maxLength": 255, "minLength": 6, "type": "string" },
+          "user_phone": { "title": "User Phone", "type": "string" },
+          "user_status": { "title": "User Status", "type": "boolean" },
+          "remarks": { "title": "Remarks", "type": "string" },
+          "roles": { "title": "Roles", "type": "array", "items": { "type": "integer" } }
+        }
+      },
+      "CurrentUser": {
+        "title": "CurrentUser",
+        "required": ["code", "message", "data"],
+        "type": "object",
+        "properties": {
+          "code": { "title": "Code", "type": "integer", "description": "status code" },
+          "message": { "title": "Message", "type": "string", "description": "message" },
+          "data": { "$ref": "#/components/schemas/UserInfo" }
+        }
+      },
+      "DaftarPengunjungItem": {
+        "title": "DaftarPengunjungItem",
+        "required": [
+          "nik",
+          "nama",
+          "status",
+          "instansi",
+          "foto",
+          "id",
+          "key",
+          "create_time",
+          "update_time"
+        ],
+        "type": "object",
+        "properties": {
+          "nik": { "title": "Nik", "maxLength": 255, "type": "string" },
+          "nama": { "title": "Nama", "maxLength": 255, "type": "string" },
+          "status": { "title": "Status", "maxLength": 255, "type": "string" },
+          "instansi": { "title": "Instansi", "maxLength": 255, "type": "string" },
+          "foto": { "title": "Foto", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "DaftarPengunjungListData": {
+        "title": "DaftarPengunjungListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/DaftarPengunjungItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ValidationError" }
+          }
+        }
+      },
+      "InsertAkanHadir": {
+        "title": "InsertAkanHadir",
+        "required": ["nomor_tiket", "nik"],
+        "type": "object",
+        "properties": {
+          "nomor_tiket": { "title": "Nomor Tiket", "type": "string" },
+          "nik": { "title": "Nik", "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "InsertAkanPakaiAset": {
+        "title": "InsertAkanPakaiAset",
+        "required": ["nomor_tiket", "nomor_seri"],
+        "type": "object",
+        "properties": {
+          "nomor_tiket": { "title": "Nomor Tiket", "type": "string" },
+          "nomor_seri": { "title": "Nomor Seri", "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "InsertPower": {
+        "title": "InsertPower",
+        "required": ["tipe", "jumlah"],
+        "type": "object",
+        "properties": {
+          "nama": { "title": "Nama", "maxLength": 255, "type": "string" },
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "source": { "title": "Source", "maxLength": 1, "type": "string" },
+          "tipe": { "title": "Tipe", "type": "array", "items": { "type": "string" } },
+          "jumlah": { "title": "Jumlah", "type": "array", "items": { "type": "integer" } }
+        }
+      },
+      "LayananItem": {
+        "title": "LayananItem",
+        "required": [
+          "nomor_tiket",
+          "jenis_layanan",
+          "co_location",
+          "perangkat",
+          "mulai_kunjungan",
+          "akhir_kunjungan",
+          "id",
+          "key",
+          "create_time",
+          "update_time"
+        ],
+        "type": "object",
+        "properties": {
+          "nomor_tiket": { "title": "Nomor Tiket", "maxLength": 255, "type": "string" },
+          "jenis_layanan": { "title": "Jenis Layanan", "maxLength": 255, "type": "string" },
+          "co_location": { "title": "Co Location", "maxLength": 255, "type": "string" },
+          "perangkat": { "title": "Perangkat", "maxLength": 255, "type": "string" },
+          "mulai_kunjungan": {
+            "title": "Mulai Kunjungan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "akhir_kunjungan": {
+            "title": "Akhir Kunjungan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "pemandu": { "title": "Pemandu", "maxLength": 255, "type": "string" },
+          "status": { "title": "Status", "type": "integer" },
+          "detail_tolak": { "title": "Detail Tolak", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "LayananListData": {
+        "title": "LayananListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/LayananItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "LokasiItem": {
+        "title": "LokasiItem",
+        "required": ["lokasi", "id", "key", "create_time", "update_time"],
+        "type": "object",
+        "properties": {
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "posisi_u": { "title": "Posisi U", "maxLength": 255, "type": "string" },
+          "sn_aset": { "title": "Sn Aset", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "LokasiListData": {
+        "title": "LokasiListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/LokasiItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "MerekTipeItem": {
+        "title": "MerekTipeItem",
+        "required": ["merek", "id", "key", "create_time", "update_time"],
+        "type": "object",
+        "properties": {
+          "merek": { "title": "Merek", "maxLength": 255, "type": "string" },
+          "tipe": { "title": "Tipe", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "MerekTipeListData": {
+        "title": "MerekTipeListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/MerekTipeItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "ModifyMobile": {
+        "title": "ModifyMobile",
+        "required": ["mobile", "captcha"],
+        "type": "object",
+        "properties": {
+          "mobile": { "title": "Mobile", "type": "string", "description": "phone number" },
+          "captcha": {
+            "title": "Captcha",
+            "maxLength": 6,
+            "minLength": 6,
+            "type": "string",
+            "description": "6-digit verification code"
+          }
+        }
+      },
+      "PemanduItem": {
+        "title": "PemanduItem",
+        "required": ["id", "key", "create_time", "update_time"],
+        "type": "object",
+        "properties": {
+          "nama": { "title": "Nama", "maxLength": 255, "type": "string" },
+          "no_hp": { "title": "No Hp", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "PemanduListData": {
+        "title": "PemanduListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PemanduItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "PowerItem": {
+        "title": "PowerItem",
+        "required": ["id", "key", "create_time", "update_time"],
+        "type": "object",
+        "properties": {
+          "nama": { "title": "Nama", "maxLength": 255, "type": "string" },
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "source": { "title": "Source", "maxLength": 1, "type": "string" },
+          "power": { "title": "Power", "maxLength": 255, "type": "string" },
+          "tipe": { "title": "Tipe", "maxLength": 255, "type": "string" },
+          "sn_aset": { "title": "Sn Aset", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "PowerListData": {
+        "title": "PowerListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PowerItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "PutPower": {
+        "title": "PutPower",
+        "required": ["id", "sn_aset"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "array", "items": { "type": "integer" } },
+          "sn_aset": { "title": "Sn Aset", "type": "string" }
+        }
+      },
+      "RackItem": {
+        "title": "RackItem",
+        "required": [
+          "name",
+          "posx",
+          "posy",
+          "posz",
+          "width",
+          "height",
+          "depth",
+          "id",
+          "key",
+          "create_time",
+          "update_time"
+        ],
+        "type": "object",
+        "properties": {
+          "name": { "title": "Name", "maxLength": 100, "type": "string" },
+          "posx": { "title": "Posx", "type": "integer" },
+          "posy": { "title": "Posy", "type": "integer" },
+          "posz": { "title": "Posz", "type": "integer" },
+          "width": { "title": "Width", "type": "integer" },
+          "height": { "title": "Height", "type": "integer" },
+          "depth": { "title": "Depth", "type": "integer" },
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "RackListData": {
+        "title": "RackListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/RackItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "RoleItem": {
+        "title": "RoleItem",
+        "required": ["id", "key", "role_name", "create_time", "update_time"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "key": { "title": "Key", "type": "integer" },
+          "role_name": { "title": "Role Name", "type": "string" },
+          "role_status": { "title": "Role Status", "type": "boolean" },
+          "role_desc": { "title": "Role Desc", "type": "string" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "RoleList": {
+        "title": "RoleList",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/RoleItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "SetAccess": {
+        "title": "SetAccess",
+        "required": ["role_id"],
+        "type": "object",
+        "properties": {
+          "role_id": { "title": "Role Id", "type": "integer" },
+          "access": {
+            "title": "Access",
+            "type": "array",
+            "items": { "type": "integer" },
+            "description": "Permissions",
+            "default": []
+          }
+        }
+      },
+      "SetRole": {
+        "title": "SetRole",
+        "required": ["user_id"],
+        "type": "object",
+        "properties": {
+          "user_id": { "title": "User Id", "type": "integer" },
+          "roles": {
+            "title": "Roles",
+            "type": "array",
+            "items": { "type": "integer" },
+            "description": "Role",
+            "default": []
+          }
+        }
+      },
+      "TolakLayanan": {
+        "title": "TolakLayanan",
+        "required": ["id"],
+        "type": "object",
+        "properties": {
+          "detail_tolak": { "title": "Detail Tolak", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdateAset": {
+        "title": "UpdateAset",
+        "required": [
+          "merek",
+          "tipe",
+          "fungsi_perangkat",
+          "foto_perangkat",
+          "nomor_seri",
+          "jenis_infra",
+          "instansi_pemilik",
+          "penanggung_jawab",
+          "lokasi",
+          "nama_ruangan",
+          "posisi_rak",
+          "psu",
+          "posisi_u",
+          "power",
+          "kapasitas_cpu",
+          "kapasitas_hdd",
+          "kapasitas_ram",
+          "daya",
+          "status_aset",
+          "user",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "merek": { "title": "Merek", "maxLength": 255, "type": "string" },
+          "tipe": { "title": "Tipe", "maxLength": 255, "type": "string" },
+          "fungsi_perangkat": { "title": "Fungsi Perangkat", "maxLength": 25, "type": "string" },
+          "foto_perangkat": { "title": "Foto Perangkat", "maxLength": 255, "type": "string" },
+          "nomor_seri": { "title": "Nomor Seri", "maxLength": 255, "type": "string" },
+          "jenis_infra": { "title": "Jenis Infra", "maxLength": 255, "type": "string" },
+          "instansi_pemilik": { "title": "Instansi Pemilik", "maxLength": 255, "type": "string" },
+          "penanggung_jawab": { "title": "Penanggung Jawab", "maxLength": 255, "type": "string" },
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "psu": { "title": "Psu", "maxLength": 255, "type": "string" },
+          "posisi_u": { "title": "Posisi U", "maxLength": 255, "type": "string" },
+          "power": { "title": "Power", "maxLength": 255, "type": "string" },
+          "kapasitas_cpu": { "title": "Kapasitas Cpu", "maxLength": 255, "type": "string" },
+          "kapasitas_hdd": { "title": "Kapasitas Hdd", "maxLength": 255, "type": "string" },
+          "kapasitas_ram": { "title": "Kapasitas Ram", "maxLength": 255, "type": "string" },
+          "daya": { "title": "Daya", "maxLength": 255, "type": "string" },
+          "tanggal_pemasangan": {
+            "title": "Tanggal Pemasangan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "tanggal_penarikan": {
+            "title": "Tanggal Penarikan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "keterangan": { "title": "Keterangan", "maxLength": 255, "type": "string" },
+          "status_aset": { "title": "Status Aset", "type": "integer" },
+          "user": { "title": "User", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdateBukuTamu": {
+        "title": "UpdateBukuTamu",
+        "required": [
+          "no_tiket",
+          "jam_masuk",
+          "jam_keluar",
+          "laporan_pekerjaan",
+          "daftar_pengunjung",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "no_tiket": { "title": "No Tiket", "maxLength": 255, "type": "string" },
+          "jam_masuk": { "title": "Jam Masuk", "type": "string", "format": "date-time" },
+          "jam_keluar": { "title": "Jam Keluar", "type": "string", "format": "date-time" },
+          "laporan_pekerjaan": { "title": "Laporan Pekerjaan", "maxLength": 255, "type": "string" },
+          "daftar_pengunjung": { "title": "Daftar Pengunjung", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdateDaftarPengunjung": {
+        "title": "UpdateDaftarPengunjung",
+        "required": ["nik", "nama", "status", "instansi", "foto", "id"],
+        "type": "object",
+        "properties": {
+          "nik": { "title": "Nik", "maxLength": 255, "type": "string" },
+          "nama": { "title": "Nama", "maxLength": 255, "type": "string" },
+          "status": { "title": "Status", "maxLength": 255, "type": "string" },
+          "instansi": { "title": "Instansi", "maxLength": 255, "type": "string" },
+          "foto": { "title": "Foto", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdateLayanan": {
+        "title": "UpdateLayanan",
+        "required": [
+          "nomor_tiket",
+          "jenis_layanan",
+          "co_location",
+          "perangkat",
+          "mulai_kunjungan",
+          "akhir_kunjungan",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "nomor_tiket": { "title": "Nomor Tiket", "maxLength": 255, "type": "string" },
+          "jenis_layanan": { "title": "Jenis Layanan", "maxLength": 255, "type": "string" },
+          "co_location": { "title": "Co Location", "maxLength": 255, "type": "string" },
+          "perangkat": { "title": "Perangkat", "maxLength": 255, "type": "string" },
+          "mulai_kunjungan": {
+            "title": "Mulai Kunjungan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "akhir_kunjungan": {
+            "title": "Akhir Kunjungan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "pemandu": { "title": "Pemandu", "maxLength": 255, "type": "string" },
+          "status": { "title": "Status", "type": "integer" },
+          "detail_tolak": { "title": "Detail Tolak", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdateLokasi": {
+        "title": "UpdateLokasi",
+        "required": ["lokasi", "id"],
+        "type": "object",
+        "properties": {
+          "lokasi": { "title": "Lokasi", "maxLength": 255, "type": "string" },
+          "nama_ruangan": { "title": "Nama Ruangan", "maxLength": 255, "type": "string" },
+          "posisi_rak": { "title": "Posisi Rak", "maxLength": 255, "type": "string" },
+          "posisi_u": { "title": "Posisi U", "maxLength": 255, "type": "string" },
+          "sn_aset": { "title": "Sn Aset", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdateMerekTipe": {
+        "title": "UpdateMerekTipe",
+        "required": ["merek", "id"],
+        "type": "object",
+        "properties": {
+          "merek": { "title": "Merek", "maxLength": 255, "type": "string" },
+          "tipe": { "title": "Tipe", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdatePemandu": {
+        "title": "UpdatePemandu",
+        "required": ["nama", "id"],
+        "type": "object",
+        "properties": {
+          "nama": { "title": "Nama", "maxLength": 255, "minLength": 1, "type": "string" },
+          "no_hp": { "title": "No Hp", "maxLength": 255, "type": "string" },
+          "id": { "title": "Id", "type": "integer" }
+        }
+      },
+      "UpdateRole": {
+        "title": "UpdateRole",
+        "required": ["id", "role_name"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "role_name": { "title": "Role Name", "type": "string" },
+          "role_status": { "title": "Role Status", "type": "boolean" },
+          "role_desc": { "title": "Role Desc", "type": "string" }
+        }
+      },
+      "UpdateStatusAset": {
+        "title": "UpdateStatusAset",
+        "required": ["id", "status_aset"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "status_aset": { "title": "Status Aset", "type": "boolean" },
+          "tanggal_penarikan": {
+            "title": "Tanggal Penarikan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nomor_seri": { "title": "Nomor Seri", "maxLength": 255, "type": "string" }
+        }
+      },
+      "UpdateUser": {
+        "title": "UpdateUser",
+        "required": ["id"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "username": { "title": "Username", "maxLength": 25, "minLength": 3, "type": "string" },
+          "password": { "title": "Password", "maxLength": 255, "minLength": 6, "type": "string" },
+          "user_phone": { "title": "User Phone", "type": "string" },
+          "user_status": { "title": "User Status", "type": "boolean" },
+          "remarks": { "title": "Remarks", "type": "string" }
+        }
+      },
+      "UpdateUserInfo": {
+        "title": "UpdateUserInfo",
+        "type": "object",
+        "properties": {
+          "nickname": { "title": "Nickname", "type": "string" },
+          "user_email": { "title": "User Email", "type": "string" },
+          "header_img": { "title": "Header Img", "type": "string" },
+          "user_phone": { "title": "User Phone", "type": "string", "description": "phone number" },
+          "password": {
+            "title": "Password",
+            "maxLength": 255,
+            "minLength": 6,
+            "type": "string",
+            "description": "password"
+          }
+        }
+      },
+      "UserInfo": {
+        "title": "UserInfo",
+        "required": ["username", "user_type", "user_status", "sex"],
+        "type": "object",
+        "properties": {
+          "username": { "title": "Username", "type": "string" },
+          "age": { "title": "Age", "type": "integer" },
+          "user_type": { "title": "User Type", "type": "boolean" },
+          "nickname": { "title": "Nickname", "type": "string" },
+          "user_phone": { "title": "User Phone", "type": "string" },
+          "user_email": { "title": "User Email", "type": "string" },
+          "full_name": { "title": "Full Name", "type": "string" },
+          "scopes": { "title": "Scopes", "type": "array", "items": { "type": "string" } },
+          "user_status": { "title": "User Status", "type": "boolean" },
+          "header_img": { "title": "Header Img", "type": "string" },
+          "sex": { "title": "Sex", "type": "integer" }
+        }
+      },
+      "UserListData": {
+        "title": "UserListData",
+        "required": ["success", "data", "total"],
+        "type": "object",
+        "properties": {
+          "success": { "title": "Success", "type": "boolean", "description": "status code" },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/UserListItem" }
+          },
+          "total": { "title": "Total", "type": "integer", "description": "total" }
+        }
+      },
+      "UserListItem": {
+        "title": "UserListItem",
+        "required": [
+          "key",
+          "id",
+          "username",
+          "user_type",
+          "user_status",
+          "sex",
+          "create_time",
+          "update_time"
+        ],
+        "type": "object",
+        "properties": {
+          "key": { "title": "Key", "type": "integer" },
+          "id": { "title": "Id", "type": "integer" },
+          "username": { "title": "Username", "type": "string" },
+          "age": { "title": "Age", "type": "integer" },
+          "user_type": { "title": "User Type", "type": "boolean" },
+          "nickname": { "title": "Nickname", "type": "string" },
+          "user_phone": { "title": "User Phone", "type": "string" },
+          "user_email": { "title": "User Email", "type": "string" },
+          "full_name": { "title": "Full Name", "type": "string" },
+          "user_status": { "title": "User Status", "type": "boolean" },
+          "header_img": { "title": "Header Img", "type": "string" },
+          "sex": { "title": "Sex", "type": "integer" },
+          "remarks": { "title": "Remarks", "type": "string" },
+          "create_time": { "title": "Create Time", "type": "string", "format": "date-time" },
+          "update_time": { "title": "Update Time", "type": "string", "format": "date-time" }
+        }
+      },
+      "UserLogin": {
+        "title": "UserLogin",
+        "required": ["code", "message", "data"],
+        "type": "object",
+        "properties": {
+          "code": { "title": "Code", "type": "integer", "description": "status code" },
+          "message": { "title": "Message", "type": "string", "description": "message" },
+          "data": { "$ref": "#/components/schemas/AccessToken" }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": ["loc", "msg", "type"],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] }
+          },
+          "msg": { "title": "Message", "type": "string" },
+          "type": { "title": "Error Type", "type": "string" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "User": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": { "is_admin": "Super administrator", "not_admin": "Ordinary administrator" },
+            "tokenUrl": "/api/v1/test/oath2"
+          }
+        }
+      }
+    }
+  }
+}

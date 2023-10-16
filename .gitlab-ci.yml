@@ -1,0 +1,18 @@
+# stages:
+#   - test
+# before_script:
+#   - echo $CI_JOB_TOKEN
+# test:
+#   stage: test
+#   variables:
+#     GITLAB_INSTANCE: "git.dgos.id"
+#   script:
+#     - 'git clone https://gitlab-ci-token:$CI_JOB_TOKEN@$GITLAB_INSTANCE/xqdzn/dcplus-fe.git'
+#     - 'ls'
+
+build-project:
+  image: node:18
+  script:
+    - yarn install
+    - yarn lint
+    - yarn build
